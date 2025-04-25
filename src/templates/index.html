@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detector de Células - YOLOv8</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Detector de Células usando YOLOv8</h1>
+            <p>Sube una imagen para analizar y detectar células automáticamente</p>
+        </header>
+
+        <div class="upload-container">
+            <div class="upload-area" id="dropArea">
+                <div class="upload-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                </div>
+                <p>Arrastra tu imagen aquí o <span>selecciona un archivo</span></p>
+                <input type="file" id="fileInput" accept="image/*">
+            </div>
+            <button id="analyzeBtn" class="button primary" disabled>Analizar Imagen</button>
+        </div>
+
+        <div class="results hidden" id="resultsContainer">
+            <h2>Resultados del Análisis</h2>
+            
+            <div class="image-comparison">
+                <div class="image-card">
+                    <h3>Imagen Original</h3>
+                    <div class="image-wrapper">
+                        <img id="originalImage" src="" alt="Imagen Original">
+                    </div>
+                </div>
+                
+                <div class="image-card">
+                    <h3>Detecciones</h3>
+                    <div class="image-wrapper">
+                        <img id="resultImage" src="" alt="Imagen con Detecciones">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="detection-stats">
+                <h3>Detecciones <span id="detectionCount" class="count-badge">0</span></h3>
+                <div class="table-container">
+                    <table id="detectionsTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Clase</th>
+                                <th>Confianza</th>
+                                <th>Coordenadas</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Filas de detecciones generadas dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="performance-section" id="performanceSection">
+            <h2>Rendimiento del Modelo</h2>
+            
+            <div class="metrics-summary">
+                <div class="metric-card">
+                    <div class="metric-value" id="mapValue">--</div>
+                    <div class="metric-label">mAP@0.5:0.95</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="map50Value">--</div>
+                    <div class="metric-label">mAP@0.5</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="precisionValue">--</div>
+                    <div class="metric-label">Precisión Media</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="recallValue">--</div>
+                    <div class="metric-label">Recall Medio</div>
+                </div>
+            </div>
+            
+            <div class="charts-container">
+                <div class="chart-card">
+                    <h3>Precisión y Recall por Clase</h3>
+                    <canvas id="precisionRecallChart"></canvas>
+                </div>
+                
+                <div class="chart-card">
+                    <h3>mAP por Umbral IoU</h3>
+                    <canvas id="mapChart"></canvas>
+                </div>
+                
+                <div class="chart-card full-width">
+                    <h3>Curva de Aprendizaje</h3>
+                    <canvas id="learningCurveChart"></canvas>
+                </div>
+                
+                <div class="chart-card">
+                    <h3>Matriz de Confusión</h3>
+                    <div class="confusion-matrix-container">
+                        <canvas id="confusionMatrixChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-card">
+                    <h3>mAP por Época</h3>
+                    <canvas id="mapEpochChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <div id="loadingOverlay" class="hidden" style="display: none !important;">
+            <div class="spinner"></div>
+            <p>Analizando imagen...</p>
+        </div>
+
+        <footer>
+            <p>Detector de Células basado en YOLOv8 | Proyecto de IA</p>
+        </footer>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@1.1.1/dist/chartjs-chart-matrix.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

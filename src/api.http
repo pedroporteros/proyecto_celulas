@@ -1,0 +1,9 @@
+POST http://localhost:5000/analyze
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="image"; filename="ejemplo.jpg"
+Content-Type: image/jpeg
+
+< ./Leica_25-02-06-111547_jpeg.rf.1e6cf51551e068b6f8bbb20ac5b24129.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
