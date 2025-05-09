@@ -1,3 +1,6 @@
 venv/
 
 uploads/
+processed_media/
+*.mp4
+.vscode/
